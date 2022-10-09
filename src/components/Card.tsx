@@ -1,6 +1,7 @@
 import { Box, Text, Flex, Collapse, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io';
+import { formatKilometer } from '../helper/formatKilometer';
 
 interface IUser {
   id: string;
@@ -77,72 +78,49 @@ export const Card = ({ children, user, vehicle }: DataInfos) => {
           >
             {user ?
               <>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Name'}:</strong> {user.name}
                 </Text>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Email'}:</strong> {user.email}
                 </Text>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Phone'}:</strong> {user.phone}
                 </Text>
               </>
 
               :
               <>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Vehicle'}:</strong> {vehicle.vehicle}
                 </Text>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Model'}:</strong> {vehicle.model}
                 </Text>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Year'}:</strong> {vehicle.year}
                 </Text>
-                <Text
-                  bg='white'
-                  color='blackAlpha.900'
-                  paddingX={3}
-                  paddingY={1.5}
-                  borderRadius='4px'
-                >
+
+                <Text variant={{ base: 'card' }}>
                   <strong>{'Registration'}:</strong> {vehicle.registration}
+                </Text>
+
+                <Text variant={{ base: 'card' }}>
+                  <strong>{'Kilometers'}:</strong> {formatKilometer(vehicle.current_kilometers)}
+                </Text>
+
+                <Text fontWeight={'bold'}>The vehicle needs service when it reach:</Text>
+
+                <Text variant={{ base: 'card' }}>
+                  <strong>{'Kilometers'}:</strong> {formatKilometer(vehicle.next_km_to_service)}
+                </Text>
+
+                <Text variant={{ base: 'card' }}>
+                  <strong>{'Date'}:</strong> {vehicle.next_service}
                 </Text>
               </>
             }

@@ -1,8 +1,5 @@
 import { InputGroup, Input, InputLeftElement } from '@chakra-ui/react';
-import { FieldValue, UseFormRegister } from 'react-hook-form';
 import { IoSpeedometerOutline } from 'react-icons/io5';
-
-import InputMask from "react-input-mask";
 
 export const OdometerReader = ({ register }) => {
 

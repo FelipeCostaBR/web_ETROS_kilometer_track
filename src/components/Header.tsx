@@ -16,6 +16,7 @@ export const Header = () => {
           src={logo}
           alt="ETROS Logo"
           layout='responsive'
+          priority={true}
 
         />
       </Link>

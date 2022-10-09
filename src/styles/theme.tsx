@@ -13,11 +13,24 @@ export const theme = extendTheme({
     heading: 'Roboto',
     body: 'Roboto'
   },
+  components: {
+    Text: {
+      variants: {
+        card: {
+          bg: 'white',
+          color: 'blackAlpha.900',
+          paddingX: '0.75rem',
+          paddingY: '0.4rem',
+          borderRadius: '4px'
+        }
+      }
+    }
+  },
   styles: {
     global: {
       body: {
         bg: 'blackAlpha.900',
-        color: '#EFEFEF',
+        color: '#FEFEFE',
       }
     },
   }

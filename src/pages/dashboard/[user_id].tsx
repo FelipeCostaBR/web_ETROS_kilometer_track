@@ -6,12 +6,6 @@ import {
   Stack,
   useDisclosure,
   UseDisclosureProps,
-  ModalOverlay,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody
 } from '@chakra-ui/react';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
@@ -20,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { IoSpeedometerOutline } from 'react-icons/io5';
 import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
+import SubmitModal from '../../components/Modal';
 import { OdometerReader } from '../../components/OdometerReader';
 import { formatKilometer } from '../../helper/formatKilometer';
 import { useAuth } from '../../hooks/auth';
@@ -53,20 +48,13 @@ interface IVehicle {
 export default function Dashboard() {
   useAuth
   const { user_id } = useRouter().query
-
   const { isOpen, onOpen, onClose } = useDisclosure({} as UseDisclosureProps)
+
   const [user, setUser] = useState<IUser>({} as IUser)
   const [vehicle, setVehicle] = useState<IVehicle>({} as IVehicle)
   const { register, handleSubmit, formState, getValues } = useForm();
 
-  const handleOdometerUpdate = async (userInput: IVehicle) => {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    if (isOpen) {
-      const res = await api.put(`/vehicles/user/${user_id}`, userInput)
-      onClose
-      console.log(res)
-    }
-  }
+
 
   useEffect(() => {
     const storage_user = localStorage.getItem('@ETROS_KILOMETER:user');
@@ -74,7 +62,7 @@ export default function Dashboard() {
     setUser(data)
 
     api.get(`vehicles/user/${user_id}`).then((vehicle) => (setVehicle(vehicle.data)))
-  }, [user_id])
+  }, [user_id, vehicle])
 
   return (
     <Flex
@@ -118,48 +106,7 @@ export default function Dashboard() {
           </Button>
         </Stack>
       </Box>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size={'xs'}
-        isCentered>
-        <ModalOverlay
-        />
-        <ModalContent
-          bg='cardBg.dark'
-          paddingY={10}
-          paddingX={3}
-        >
-          <ModalHeader
-            fontSize={'xl'}
-          >
-            Please, confirm below if the kilometers is correct
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody
-            as='form'
-            onSubmit={handleSubmit(handleOdometerUpdate)}
-          >
-            <Flex alignItems={'center'}>
-              <IoSpeedometerOutline color='white' size={24} />
-              <Text pl={2} fontSize='2xl' align={'center'} fontWeight={'bold'}>
-                {formatKilometer(getValues("current_kilometers"))}
-              </Text>
-            </Flex>
-            <Button
-              isLoading={formState.isSubmitting}
-              type={'submit'}
-              onClick={onClose}
-              w='100%'
-              colorScheme="green"
-              size={'lg'}
-              mt='50px'
-            >
-              Submit
-            </Button>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <SubmitModal isOpen={isOpen} onClose={onClose} id={user_id} handleSubmit={handleSubmit} formState={formState} getValues={getValues} />
     </Flex >
   )
 }

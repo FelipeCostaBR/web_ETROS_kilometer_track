@@ -8,23 +8,16 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
-  UseDisclosureProps
 } from "@chakra-ui/react";
-import { FieldValues, FormState, useForm, UseFormGetValues, UseFormHandleSubmit } from "react-hook-form";
+import {
+  FieldValues,
+  FormState,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { formatKilometer } from "../helper/formatKilometer";
 import api from "../services/api";
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  date_birth: Date;
-  phone: number;
-  created_at: Date;
-  updated_at: Date;
-}
 
 interface IVehicle {
   id: string;
@@ -51,13 +44,23 @@ interface ISubmitModal {
   getValues: UseFormGetValues<FieldValues>;
 }
 
-export default function SubmitModal({ isOpen, onClose, id, handleSubmit, formState, getValues }: ISubmitModal) {
+export default function SubmitModal({
+  isOpen,
+  onClose,
+  id,
+  handleSubmit,
+  formState,
+  getValues,
+}: ISubmitModal) {
 
   const handleOdometerUpdate = async (userInput: IVehicle) => {
     await new Promise(resolve => setTimeout(resolve, 500));
     if (isOpen) {
-      const res = await api.put(`/vehicles/user/${id}`, userInput)
-      onClose
+      const response = await api.put(`/vehicles/user/${id}`, userInput)
+      if (response.status === 200) {
+        onClose
+        window.location.reload();
+      }
     }
   }
 
@@ -84,10 +87,10 @@ export default function SubmitModal({ isOpen, onClose, id, handleSubmit, formSta
           as='form'
           onSubmit={handleSubmit(handleOdometerUpdate)}
         >
-          <Flex alignItems={'center'}>
+          <Flex justifyContent={'center'}>
             <IoSpeedometerOutline color='white' size={24} />
             <Text pl={2} fontSize='2xl' align={'center'} fontWeight={'bold'}>
-              {formatKilometer(getValues("current_kilometers"))}
+              {formatKilometer(getValues("current_kilometers"))} km
             </Text>
           </Flex>
           <Button

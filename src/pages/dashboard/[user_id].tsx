@@ -11,7 +11,6 @@ import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoSpeedometerOutline } from 'react-icons/io5';
 import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import SubmitModal from '../../components/Modal';
@@ -52,17 +51,21 @@ export default function Dashboard() {
 
   const [user, setUser] = useState<IUser>({} as IUser)
   const [vehicle, setVehicle] = useState<IVehicle>({} as IVehicle)
-  const { register, handleSubmit, formState, getValues } = useForm();
-
-
+  const { register, handleSubmit, formState, getValues, unregister } = useForm();
 
   useEffect(() => {
     const storage_user = localStorage.getItem('@ETROS_KILOMETER:user');
-    const data = JSON.parse(storage_user);
-    setUser(data)
+    const userLocalStorage = JSON.parse(storage_user);
+    setUser(userLocalStorage)
 
-    api.get(`vehicles/user/${user_id}`).then((vehicle) => (setVehicle(vehicle.data)))
-  }, [user_id, vehicle])
+    api.get(`vehicles/user/${user_id}`).then((vehicle) => {
+      setVehicle({
+        ...vehicle.data,
+        current_kilometers: formatKilometer(vehicle.data.current_kilometers),
+        next_km_to_service: formatKilometer(vehicle.data.next_km_to_service),
+      })
+    })
+  }, [user_id])
 
   return (
     <Flex
@@ -82,9 +85,9 @@ export default function Dashboard() {
           <Text fontSize='2xl' >Thank you for choosing Etros!</Text>
         </Stack>
 
-        <Stack spacing={6}>
-          <Card user={user}>Your Details</Card>
-          <Card vehicle={vehicle}>Vehicle Details</Card>
+        <Stack spacing={6} maxWidth={'20rem'}>
+          <Card user={user} openCard={false}>Your Details</Card>
+          <Card vehicle={vehicle} openCard={true}>Vehicle Details</Card>
 
         </Stack>
 
@@ -106,7 +109,14 @@ export default function Dashboard() {
           </Button>
         </Stack>
       </Box>
-      <SubmitModal isOpen={isOpen} onClose={onClose} id={user_id} handleSubmit={handleSubmit} formState={formState} getValues={getValues} />
+      <SubmitModal
+        isOpen={isOpen}
+        onClose={onClose}
+        id={user_id}
+        handleSubmit={handleSubmit}
+        formState={formState}
+        getValues={getValues}
+      />
     </Flex >
   )
 }

@@ -1,7 +1,10 @@
 import { Box, Text, Flex, Collapse, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
+import { format } from 'date-fns'
 import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io';
 import { formatKilometer } from '../helper/formatKilometer';
+import { parseISO } from 'date-fns';
+import { formatDate } from '../helper/formatDate';
 
 interface IUser {
   id: string;
@@ -33,10 +36,11 @@ interface DataInfos {
   children: string;
   user?: IUser;
   vehicle?: IVehicle;
+  openCard: boolean;
 }
 
-export const Card = ({ children, user, vehicle }: DataInfos) => {
-  const [isOpen, setIsOpen] = useState(false)
+export const Card = ({ children, user, vehicle, openCard }: DataInfos) => {
+  const [isOpen, setIsOpen] = useState(openCard)
   const handleTransition = () => setIsOpen(!isOpen)
 
   return (
@@ -94,11 +98,7 @@ export const Card = ({ children, user, vehicle }: DataInfos) => {
               :
               <>
                 <Text variant={{ base: 'card' }}>
-                  <strong>{'Vehicle'}:</strong> {vehicle.vehicle}
-                </Text>
-
-                <Text variant={{ base: 'card' }}>
-                  <strong>{'Model'}:</strong> {vehicle.model}
+                  <strong>{'Vehicle'}:</strong> {vehicle.vehicle} {vehicle.model}
                 </Text>
 
                 <Text variant={{ base: 'card' }}>
@@ -110,18 +110,20 @@ export const Card = ({ children, user, vehicle }: DataInfos) => {
                 </Text>
 
                 <Text variant={{ base: 'card' }}>
-                  <strong>{'Kilometers'}:</strong> {formatKilometer(vehicle.current_kilometers)}
+                  <strong>{'Current kilometers'}:</strong> {vehicle.current_kilometers} km
                 </Text>
 
                 <Text fontWeight={'bold'}>The vehicle needs service when it reach:</Text>
 
                 <Text variant={{ base: 'card' }}>
-                  <strong>{'Kilometers'}:</strong> {formatKilometer(vehicle.next_km_to_service)}
+                  <strong>{'Kilometers'}:</strong> {vehicle.next_km_to_service} km
                 </Text>
 
                 <Text variant={{ base: 'card' }}>
-                  <strong>{'Date'}:</strong> {vehicle.next_service}
+                  <strong>{'Date'}:</strong> {formatDate(vehicle.next_service)}
                 </Text>
+
+
               </>
             }
           </Stack>

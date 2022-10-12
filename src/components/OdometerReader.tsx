@@ -1,11 +1,12 @@
-import { InputGroup, Input, InputLeftElement } from '@chakra-ui/react';
+import { InputLeftElement, NumberInput, NumberInputField } from '@chakra-ui/react';
+import { useState } from 'react';
 import { IoSpeedometerOutline } from 'react-icons/io5';
 
 export const OdometerReader = ({ register }) => {
 
   return (
-    <InputGroup>
-      <Input
+    <NumberInput>
+      <NumberInputField
         type={'number'}
         placeholder='Type here'
         _placeholder={{ opacity: 0.5, color: 'inherit' }}
@@ -29,6 +30,6 @@ export const OdometerReader = ({ register }) => {
       >
         <IoSpeedometerOutline color='white' size={24} />
       </InputLeftElement>
-    </InputGroup>
+    </NumberInput>
   )
 }

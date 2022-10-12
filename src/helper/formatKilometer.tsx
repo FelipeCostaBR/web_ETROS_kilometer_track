@@ -1,4 +1,4 @@
-export const formatKilometer = (kilometer: number = 0) => {
+export const formatKilometer = (kilometer: number | string = 0) => {
   const kilometer_string = kilometer.toString()
 
   if (kilometer_string.length < 4) {

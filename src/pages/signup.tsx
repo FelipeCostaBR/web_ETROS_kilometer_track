@@ -2,6 +2,7 @@ import { Flex, Text, Stack, Input, Box, Button, Link, Center } from '@chakra-ui/
 import { Header } from "../components/Header";
 
 export default function Signup() {
+
   return (
     <Flex
       w='100vw'
@@ -19,6 +20,19 @@ export default function Signup() {
       >
         <Box w='70%'>
           <Stack spacing={0}>
+            <Text>Name</Text>
+            <Input
+              type='text'
+              placeholder='name'
+              size='lg'
+              bgColor='white'
+              color='blackAlpha.900'
+              isRequired={true}
+              focusBorderColor='green.light'
+            />
+          </Stack>
+
+          <Stack spacing={0} mt={5}>
             <Text>Email Address</Text>
             <Input
               type='email'
@@ -69,7 +83,6 @@ export default function Signup() {
               </Text>
             </Center>
           </Stack>
-
         </Box>
 
       </Flex>

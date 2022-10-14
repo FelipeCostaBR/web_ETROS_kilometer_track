@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  useToast
 } from "@chakra-ui/react";
 import {
   FieldValues,
@@ -52,14 +53,24 @@ export default function SubmitModal({
   formState,
   getValues,
 }: ISubmitModal) {
-
+  const toast = useToast()
   const handleOdometerUpdate = async (userInput: IVehicle) => {
     await new Promise(resolve => setTimeout(resolve, 500));
     if (isOpen) {
       const response = await api.put(`/vehicles/user/${id}`, userInput)
+
       if (response.status === 200) {
         onClose
-        window.location.reload();
+
+        toast({
+          title: 'Success.',
+          position: 'top-right',
+          description: "kilometer was updated.",
+          status: 'success',
+          duration: 6000,
+          isClosable: true,
+
+        })
       }
     }
   }

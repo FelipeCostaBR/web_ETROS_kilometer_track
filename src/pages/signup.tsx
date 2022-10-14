@@ -1,6 +1,5 @@
 import { Flex, Text, Stack, Input, Box, Button, Link, Center } from '@chakra-ui/react'
 import { Header } from "../components/Header";
-import { PasswordInput } from '../components/PasswordInput';
 
 export default function Signup() {
   return (
@@ -30,11 +29,6 @@ export default function Signup() {
               isRequired={true}
               focusBorderColor='green.light'
             />
-          </Stack>
-
-          <Stack spacing={0} mt={5}>
-            <Text>Password</Text>
-            <PasswordInput />
           </Stack>
 
           <Stack spacing={0} mt={5}>

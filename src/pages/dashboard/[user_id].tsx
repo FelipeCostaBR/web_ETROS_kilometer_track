@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   const [user, setUser] = useState<IUser>({} as IUser)
   const [vehicle, setVehicle] = useState<IVehicle>({} as IVehicle)
-  const { register, handleSubmit, formState, getValues, unregister } = useForm();
+  const { register, handleSubmit, formState, getValues } = useForm();
 
   useEffect(() => {
     const storage_user = localStorage.getItem('@ETROS_KILOMETER:user');

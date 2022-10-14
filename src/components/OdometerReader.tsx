@@ -1,5 +1,4 @@
 import { InputLeftElement, NumberInput, NumberInputField } from '@chakra-ui/react';
-import { useState } from 'react';
 import { IoSpeedometerOutline } from 'react-icons/io5';
 
 export const OdometerReader = ({ register }) => {
@@ -7,7 +6,6 @@ export const OdometerReader = ({ register }) => {
   return (
     <NumberInput>
       <NumberInputField
-        type={'number'}
         placeholder='Type here'
         _placeholder={{ opacity: 0.5, color: 'inherit' }}
         paddingLeft={14}
@@ -16,7 +14,6 @@ export const OdometerReader = ({ register }) => {
         bg='cardBg.dark'
         color='white'
         border='InactiveBorder'
-        isRequired={true}
         textAlign='left'
         name='current_kilometers'
         {...register('current_kilometers')}

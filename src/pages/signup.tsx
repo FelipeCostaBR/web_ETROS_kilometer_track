@@ -1,18 +1,13 @@
-import { Flex, Text, Stack, Input, Box, Button, Link, Center, Divider } from '@chakra-ui/react'
+import { Flex, Text, Stack, Input, Box, Button, Link, Center } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import { Header } from "../components/Header";
 import api from '../services/api';
 
-import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io';
 import {
-  AsyncCreatableSelect,
-  AsyncSelect,
-  CreatableSelect,
   OptionBase,
   GroupBase,
   Select,
 } from "chakra-react-select";
-import { colorOptions } from '../helper/data';
 
 interface IVehicle extends OptionBase {
   id: string;
@@ -20,11 +15,7 @@ interface IVehicle extends OptionBase {
   model: string;
   registration: string;
 }
-interface ColorOption extends OptionBase {
-  label: string;
-  value: string;
-  color?: string;
-}
+
 export default function Signup() {
   const [vehicle, setVehicle] = useState<[IVehicle]>()
 
@@ -105,37 +96,46 @@ export default function Signup() {
           </Stack>
 
           <Box mt={6}>
-            {vehicle &&
-              <Select<IVehicle, false, GroupBase<IVehicle>>
-                name="vehicles"
-                className="chakra-react-select"
-                classNamePrefix="chakra-react-select"
-                options={vehicle}
-                placeholder="Select Vehicle"
-                selectedOptionStyle="check"
-                size='lg'
-                focusBorderColor='green.light'
-                chakraStyles={{
-                  container: (provided) => ({
-                    ...provided,
-                    bg: 'white',
-                    color: 'blackAlpha.900'
-                  }),
-                  dropdownIndicator: (provided) => ({
-                    ...provided,
-                    bg: "transparent",
-                    px: 2,
-                    cursor: "inherit",
-                    color: 'blackAlpha.900'
-                  }),
-                  indicatorSeparator: (provided) => ({
-                    ...provided,
-                    color: 'black'
 
-                  })
-                }}
-              />
-            }
+            <Select<IVehicle, false, GroupBase<IVehicle>>
+              name="vehicles"
+              className="chakra-react-select"
+              classNamePrefix="chakra-react-select"
+              options={vehicle}
+              placeholder="Select Vehicle"
+              selectedOptionStyle="check"
+              size='lg'
+              focusBorderColor='green.light'
+
+              chakraStyles={{
+                container: (provided) => ({
+                  ...provided,
+                  bg: 'white',
+                  color: 'blackAlpha.900'
+                }),
+                dropdownIndicator: (provided) => ({
+                  ...provided,
+                  bg: "transparent",
+                  px: 2,
+                  cursor: "inherit",
+                  color: 'blackAlpha.900'
+                }),
+                indicatorSeparator: (provided) => ({
+                  ...provided,
+                  display: 'none'
+                }),
+                option: (provided) => ({
+                  ...provided,
+                  borderBottom: '1px',
+                  borderColor: 'blackAlpha.400'
+                }),
+                menuList: (provided) => ({
+                  ...provided,
+                  margin: '0 auto',
+                  padding: '0px'
+                }),
+              }}
+            />
           </Box>
 
           <Stack spacing={2}>

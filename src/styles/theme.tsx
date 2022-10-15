@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
+import { IoIosArrowBack } from 'react-icons/io';
 
 export const theme = extendTheme({
   colors: {
@@ -24,6 +25,17 @@ export const theme = extendTheme({
           borderRadius: '4px'
         }
       }
+    },
+    Select: {
+      baseStyle: {
+        field: {
+          backgroundColor: 'white',
+          color: 'blackAlpha.700'
+        },
+        icon: {
+          color: 'blackAlpha.900',
+        }
+      }
     }
   },
   styles: {
@@ -31,6 +43,9 @@ export const theme = extendTheme({
       body: {
         bg: 'blackAlpha.900',
         color: '#FEFEFE',
+      },
+      option: {
+        color: 'red'
       }
     },
   }

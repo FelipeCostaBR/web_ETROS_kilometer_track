@@ -1,9 +1,6 @@
 import { Box, Text, Flex, Collapse, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { format } from 'date-fns'
 import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io';
-import { formatKilometer } from '../helper/formatKilometer';
-import { parseISO } from 'date-fns';
 import { formatDate } from '../helper/formatDate';
 
 interface IUser {

@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import api from '../services/api';
 interface IUser {
@@ -20,10 +21,18 @@ interface SignInCredentials {
   email: string;
   date_birth: Date;
 }
+interface SignUpCredentials {
+  name: string;
+  email: string;
+  date_birth: Date;
+  phone: number;
+  vehicle_id: string;
+}
 
 interface AuthContextState {
   user: IUser;
   signIn(credentials: SignInCredentials): Promise<void>;
+  signUp(credentials: SignUpCredentials): Promise<AxiosResponse>;
   signOut(): void;
 }
 
@@ -45,11 +54,12 @@ const AuthProvider = ({ children }) => {
   });
 
   const signIn = useCallback(async ({ email, date_birth }: SignInCredentials) => {
+    console.log(email, date_birth)
     const response = await api.post('sessions', {
       email,
       date_birth,
     });
-
+    console.log('response', response)
     const { token, user } = response.data;
 
     localStorage.setItem('@ETROS_KILOMETER:token', token);
@@ -57,6 +67,15 @@ const AuthProvider = ({ children }) => {
 
     setData({ token, user });
     return user.id
+  }, []);
+
+  const signUp = useCallback(async ({ name, email, date_birth, phone, vehicle_id }: SignUpCredentials) => {
+    const response = await api.post('users', {
+      name, email, date_birth, phone, vehicle_id
+    });
+
+    return response
+
   }, []);
 
   const signOut = useCallback(() => {
@@ -68,7 +87,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
